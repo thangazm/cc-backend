@@ -1,8 +1,6 @@
-version: 0.1
+version: 0.2
 phases:
   install:
-    runtime-versions:
-      java: python3.7
     commands:
       - aws cloudformation package --template-file samsourceTemp.yaml --s3-bucket codepipeline-us-east-1-348725123254 --output-template-file samdesttemplate.yaml
 artifacts:
