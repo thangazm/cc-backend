@@ -11,7 +11,7 @@ Resources:
       Description: 'Lambda function for CD Execution test'
       MemorySize: 128
       Timeout: 30
-      Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
+      Role: 'cc-lambda-pipeline'
       Events:
         getAZsAPI:
           Type: Api
