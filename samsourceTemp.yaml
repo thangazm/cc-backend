@@ -12,36 +12,29 @@ Resources:
       MemorySize: 512
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
-      Policies:
-        - AmazonDynamoDBFullAccess
-      Environment:
-        Variables:
-          TableName: !Ref vehicleModel  
       Events:
         getAZsAPI:
           Type: Api
           Properties:
             Path: /getazs
             Method: get
-
-      # Policies:
-
-        # - Version: '2012-10-17'
-        #   Statement:
-        #     - Effect: Allow
-        #       Action:
-        #         - 'dynamodb:DeleteItem'
-        #         - 'dynamodb:GetItem'
-        #         - 'dynamodb:PutItem'
-        #         - 'dynamodb:UpdateItem'
-        #       Resource:
-        #         'Fn::Join':
-        #           - ''
-        #           - - 'arn:aws:dynamodb:'
-        #             - Ref: 'AWS::Region'
-        #             - ':'
-        #             - Ref: 'AWS::AccountId'
-        #             - ':table/vehicleModel'
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'dynamodb:DeleteItem'
+                - 'dynamodb:GetItem'
+                - 'dynamodb:PutItem'
+                - 'dynamodb:UpdateItem'
+              Resource:
+                'Fn::Join':
+                  - ''
+                  - - 'arn:aws:dynamodb:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':table/vehicleModel'
   vehicleModel:
     Type: 'AWS::DynamoDB::Table'
     Properties:
