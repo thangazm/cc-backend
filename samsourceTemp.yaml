@@ -45,6 +45,18 @@ Resources:
       KeySchema:
         - AttributeName: model_id
           KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: model_name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: model_name
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: model_category
+          AttributeType: S
+      KeySchema:
+        - AttributeName: model_category
+          KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5 
