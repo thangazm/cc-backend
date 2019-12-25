@@ -13,11 +13,11 @@ def lambda_handler(event, context):
         table = dynamodb.Table('vehicleModel')
         data = table.scan()
 
-        response = {
+        return {
             'statusCode': 200,
             'body': json.dumps(data)
         }
-    
+    # return response
     # try:
     #     table = dynamodb.Table('vehicleModel')
                    
