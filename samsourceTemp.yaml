@@ -13,28 +13,11 @@ Resources:
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
-        getAZsAPI:
+        searchModelAPI:
           Type: Api
           Properties:
-            Path: /getazs
+            Path: /searchmodel
             Method: get
-      # Policies:
-      #   - Version: '2012-10-17'
-      #     Statement:
-      #       - Effect: Allow
-      #         Action:
-      #           - 'dynamodb:DeleteItem'
-      #           - 'dynamodb:GetItem'
-      #           - 'dynamodb:PutItem'
-      #           - 'dynamodb:UpdateItem'
-      #         Resource:
-      #           'Fn::Join':
-      #             - ''
-      #             - - 'arn:aws:dynamodb:'
-      #               - Ref: 'AWS::Region'
-      #               - ':'
-      #               - Ref: 'AWS::AccountId'
-      #               - ':table/vehicleModel'
   vehicleModel:
     Type: 'AWS::DynamoDB::Table'
     Properties:
@@ -44,18 +27,6 @@ Resources:
           AttributeType: S
       KeySchema:
         - AttributeName: model_id
-          KeyType: HASH
-      AttributeDefinitions:
-        - AttributeName: model_name
-          AttributeType: S
-      KeySchema:
-        - AttributeName: model_name
-          KeyType: HASH
-      AttributeDefinitions:
-        - AttributeName: model_category
-          AttributeType: S
-      KeySchema:
-        - AttributeName: model_category
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5
