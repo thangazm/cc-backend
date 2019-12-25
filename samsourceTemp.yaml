@@ -2,10 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: CD Demo Lambda
 Resources:
-  CDDemoLambda:
+  carLambdaModel:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: lambdademo.lambda_handler
+      Handler: lambda-model.lambda_handler
       Runtime: python3.6
       CodeUri: ./car-model
       Description: 'Lambda function for CD Execution test'
