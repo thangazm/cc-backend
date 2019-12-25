@@ -17,7 +17,12 @@ Resources:
           Type: Api
           Properties:
             Path: /searchmodel
-            Method: get
+            Method: GET
+        putModelAPI:
+          Type: Api
+          Properties:
+            Path: /model
+            Method: POST
   vehicleModel:
     Type: 'AWS::DynamoDB::Table'
     Properties:
