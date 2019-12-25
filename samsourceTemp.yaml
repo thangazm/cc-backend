@@ -35,18 +35,17 @@ Resources:
                     - ':'
                     - Ref: 'AWS::AccountId'
                     - ':table/vehicleModel'
-
-vehicleModel:
-  Type: 'AWS::DynamoDB::Table'
-  Properties:
-    TableName: model
-    AttributeDefinitions:
-      - AttributeName: model_id
-        AttributeType: S
-    KeySchema:
-      - AttributeName: model_id
-        KeyType: HASH
-    ProvisionedThroughput:
-      ReadCapacityUnits: 5
-      WriteCapacityUnits: 5 
+  vehicleModel:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: model
+      AttributeDefinitions:
+        - AttributeName: model_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: model_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5 
       
