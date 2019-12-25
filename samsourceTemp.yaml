@@ -9,7 +9,7 @@ Resources:
       Runtime: python3.6
       CodeUri: ./LambdaRest
       Description: 'Lambda function for CD Execution test'
-      MemorySize: 128
+      MemorySize: 512
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
@@ -18,3 +18,35 @@ Resources:
           Properties:
             Path: /getazs
             Method: get
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'dynamodb:DeleteItem'
+                - 'dynamodb:GetItem'
+                - 'dynamodb:PutItem'
+                - 'dynamodb:UpdateItem'
+              Resource:
+                'Fn::Join':
+                  - ''
+                  - - 'arn:aws:dynamodb:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':table/vehicleModel'
+
+vehicleModel:
+  Type: 'AWS::DynamoDB::Table'
+  Properties:
+    TableName: model
+    AttributeDefinitions:
+      - AttributeName: model_id
+        AttributeType: S
+    KeySchema:
+      - AttributeName: model_id
+        KeyType: HASH
+    ProvisionedThroughput:
+      ReadCapacityUnits: 5
+      WriteCapacityUnits: 5 
+      
