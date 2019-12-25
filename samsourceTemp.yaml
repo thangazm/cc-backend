@@ -16,7 +16,7 @@ Resources:
         searchModelAPI:
           Type: Api
           Properties:
-            Path: /searchmodel
+            Path: /model
             Method: GET
         putModelAPI:
           Type: Api
