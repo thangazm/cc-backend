@@ -9,12 +9,26 @@ Resources:
       Runtime: python3.6
       CodeUri: ./LambdaRest
       Description: 'Lambda function for CD Execution test'
-      MemorySize: 128
+      MemorySize: 512
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
-        getAZsAPI:
+        searchModelAPI:
           Type: Api
           Properties:
-            Path: /getazs
+            Path: /searchmodel
             Method: get
+  vehicleModel:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: vehicleModel
+      AttributeDefinitions:
+        - AttributeName: model_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: model_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5 
+      
