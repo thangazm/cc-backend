@@ -7,21 +7,29 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
     method = ''
-    # method = event
-    for (key, value) in event.items():
-   # Check if key is even then add pair to new dictionary
-        if key == "httpMethod":
-            method = value
+    method = event['httpMethod']
 
     if method == 'GET':
         table = dynamodb.Table('vehicleModel')
         data = table.scan()
 
-    return {
+    response = {
         'statusCode': 200,
-        'body': json.dumps(data)
+        'body': json.dumps(data['Items'])
     }
-    # return response
+    return response
+    if method == 'POST':
+        return {
+        'statusCode': 200,
+        'body': json.dumps(event)
+        }
+        # response = table.put_item(
+        #     Item={
+        #             'model_id': 'M1002',
+        #             'model_name': 'Audi',
+        #             'model_type': 'Car'
+        #             }
+        # )
     # try:
     #     table = dynamodb.Table('vehicleModel')
                    
