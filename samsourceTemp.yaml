@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: lambdademo.lambda_handler
       Runtime: python3.6
-      CodeUri: ./LambdaRest
+      CodeUri: ./car-model
       Description: 'Lambda function for CD Execution test'
       MemorySize: 512
       Timeout: 30
