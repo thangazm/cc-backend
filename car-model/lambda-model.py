@@ -13,38 +13,16 @@ def lambda_handler(event, context):
         table = dynamodb.Table('vehicleModel')
         data = table.scan()
 
-    response = {
+        response = {
         'statusCode': 200,
         'body': json.dumps(data['Items'])
-    }
-    return response
-    if method == 'POST':
-        return {
-        'statusCode': 200,
-        'body': json.dumps(event)
         }
-        # response = table.put_item(
-        #     Item={
-        #             'model_id': 'M1002',
-        #             'model_name': 'Audi',
-        #             'model_type': 'Car'
-        #             }
-        # )
-    # try:
-    #     table = dynamodb.Table('vehicleModel')
-                   
-    #     response = table.put_item(
-    #         Item={
-    #                 'model_id': 'M1002',
-    #                 'model_name': 'Audi',
-    #                 'model_type': 'Car'
-    #                 }
-    #     )
-    
-    #     return {
-    #         'statusCode': 200,
-    #         'message':'Success!'}
-    # except:
-    #     return {
-    #         'statusCode': 400,
-    #         'body': 'Error, bad request!'}
+        return response
+        
+    if method == 'POST':
+
+        response = table.put_item(
+            Item=event['body']
+        )
+        
+        return response
