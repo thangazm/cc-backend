@@ -11,11 +11,20 @@ def lambda_handler(event, context):
     table = dynamodb.Table('vehicleModel')
 
     if method == 'GET':
-        return {
-            'body': json.dumps(event)
-        }
+        # return {
+        #     'body': json.dumps(event)
+        # }
         # get_models(table)
-
+        query_string_params = event['queryStringParameters']
+        if query_string_params == None:
+            get_models(table)
+        else:
+            for param, value in query_string_params.keys():
+                if param == 'id':
+                    id = value
+                    get_models_by_id(table, id)
+                if param == 'name':
+                    name = values
     if method == 'POST':
         try:
             jsondata = ast.literal_eval(event['body'])
@@ -53,22 +62,25 @@ def get_models(table):
             
         }
 
-def get_models(table, model_id):
+def get_models_by_id(table, model_id):
 
     try:
 
-        data = table.scan()
+        response = table.get_item(
+            Key={
+                'model_id': model_id,
+            }
+        )
 
-        response = {
-            'statusCode': 200,
-            'body': json.dumps(data['Items'])
-        }
+        # response = {
+        #     'statusCode': 200,
+        #     'body': json.dumps(data['Items'])
+        # }
 
-        return response
+        # return response
 
-    except:
-        return {
-            'statusCode': 400,
-            'body': 'Error, bad request!'
-            
-        }
+    except ClientError as e:
+        return e.response['Error']['Message']
+    else:
+        item = response['Item']
+        return json.dumps(item, indent=4, cls=DecimalEncoder)
