@@ -23,10 +23,10 @@ Resources:
           Properties:
             Path: /model
             Method: POST
-  vehicleModel:
+  model:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: vehicleModel
+      TableName: model
       AttributeDefinitions:
         - AttributeName: model_id
           AttributeType: S

@@ -8,7 +8,7 @@ dynamodb = boto3.resource('dynamodb')
 def lambda_handler(event, context):
     method = ''
     method = event['httpMethod']
-    table = dynamodb.Table('vehicleModel')
+    table = dynamodb.Table('model')
 
     if method == 'GET':
         # return {
