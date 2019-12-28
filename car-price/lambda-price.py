@@ -5,6 +5,7 @@
 import json
 import ast
 import boto3
+import uuid
 
 # Get the service resource.
 dynamodb = boto3.resource('dynamodb')
@@ -16,7 +17,10 @@ def lambda_handler(event, context):
     # if method == 'GET':
     if method == 'POST':
         try:
-            jsondata = ast.literal_eval(event['body'])
+            id = str(uuid.uuid4())
+            post_data = event['body']
+            post_data = post_data['price_id'] = id
+            jsondata = ast.literal_eval(post_data)
             value = table.put_item(
                 Item=jsondata
             )

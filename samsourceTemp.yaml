@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
-Description: CD Demo Lambda
+Description: SAM Lambda Template
 Resources:
   carLambdaModel:
     Type: 'AWS::Serverless::Function'
@@ -69,4 +69,17 @@ Resources:
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5
-        WriteCapacityUnits: 5    
+        WriteCapacityUnits: 5
+  options:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: options
+      AttributeDefinitions:
+        - AttributeName: option_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: option_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
