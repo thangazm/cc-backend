@@ -18,9 +18,7 @@ def lambda_handler(event, context):
     # if method == 'GET':
     if method == 'POST':
         try:
-            id = str(uuid.uuid4())
             post_data = event['body']
-            post_data['price_id'] = id
             jsondata = ast.literal_eval(post_data)
             value = table.put_item(
                 Item=jsondata
