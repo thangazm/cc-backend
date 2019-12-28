@@ -18,6 +18,7 @@ def lambda_handler(event, context):
     if method == 'GET':
         query_string_params = event['queryStringParameters']
         data = table.scan()
+        data = data['Items']
 
         if query_string_params == None:
             try:
@@ -54,9 +55,6 @@ def lambda_handler(event, context):
                         }
                     if key != 'id' and key:
                         name = value
-                        data = table.scan()
-                        data = data['Items']
-
                         result_list = [d for d in data if d[key] == name]
 
                         return {
@@ -83,5 +81,4 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 400,
                 'body': 'Error, bad request!'
-
             }
