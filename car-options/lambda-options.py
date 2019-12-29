@@ -8,7 +8,6 @@ import boto3
 from boto3 import client as boto3_client
 from collections import defaultdict
 from operator import itemgetter
-from decimal import Decimal
 
 # Get the service resource.
 dynamodb = boto3.resource('dynamodb')
@@ -54,16 +53,24 @@ def lambda_handler(event, context):
             models = json.loads(res_json['body']) # returns a list of all models
             options_list = data['Items']
 
+            # merge two lists(model, option)
             d = defaultdict(dict)
-            for l in (model, options_list):
+            for l in (models, options_list):
                 for elem in l:
                     d[elem['model_id']].update(elem)
 
             combine_list = sorted(d.values(), key=itemgetter("model_id"))
 
+            # create new list to derive only options with models available in the combine_list
+            new_option_list = []
+        
+            for option in combine_list:
+                if 'option_id' in option.keys():
+                    new_option_list.append(option)
+            
             return {
                 'statusCode': 200,
-                'body': json.dumps(combine_list)
+                'body': json.dumps(new_option_list)
             }
         except:
             return {

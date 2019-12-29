@@ -68,6 +68,7 @@ def lambda_handler(event, context):
             models = json.loads(res_json['body']) # returns a list of all models
             price_list = data['Items']
 
+            # merge two lists(models, price)
             d = defaultdict(dict)
             for l in (price_list, models):
                 for elem in l:
