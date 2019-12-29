@@ -1,6 +1,6 @@
-# ---------------------------------------
-# Service for GET, POST car price details
-# ---------------------------------------
+# ----------------------------------
+# Service for GET, POST car options
+# ----------------------------------
 
 import json
 import ast
@@ -14,24 +14,10 @@ from decimal import Decimal
 dynamodb = boto3.resource('dynamodb')
 lambda_client = boto3_client('lambda', region_name="us-east-1")
 
-# convert decimal types of objects to serialize the json output
-class fakefloat(float):
-    def __init__(self, value):
-        self._value = value
-    def __repr__(self):
-        return str(self._value)
-
-def defaultencode(o):
-    if isinstance(o, Decimal):
-        # Subclass float with custom repr?
-        return fakefloat(o)
-    raise TypeError(repr(o) + " is not JSON serializable")
-
-
 def lambda_handler(event, context):
     method = ''
     method = event['httpMethod']
-    table = dynamodb.Table('price')
+    table = dynamodb.Table('options')
 
     if method == 'POST':
         try:
@@ -77,11 +63,10 @@ def lambda_handler(event, context):
 
             return {
                 'statusCode': 200,
-                'body': json.dumps(combine_list, default=defaultencode)
+                'body': json.dumps(combine_list)
             }
         except:
             return {
                 'statusCode': 400,
                 'body': 'Error, bad request!'
             }
-        

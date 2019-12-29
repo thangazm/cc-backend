@@ -44,6 +44,27 @@ Resources:
           Properties:
             Path: /price
             Method: POST
+  carLambdaOptions:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda-options.lambda_handler
+      Runtime: python3.6
+      CodeUri: ./car-options
+      Description: 'Lambda function for GET POST car Options'
+      MemorySize: 512
+      Timeout: 30
+      Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
+      Events:
+        searchModelAPI:
+          Type: Api
+          Properties:
+            Path: /options
+            Method: GET
+        putModelAPI:
+          Type: Api
+          Properties:
+            Path: /options
+            Method: POST
   model:
     Type: 'AWS::DynamoDB::Table'
     Properties:
