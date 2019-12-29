@@ -52,10 +52,10 @@ def lambda_handler(event, context):
             
             res_json = json.loads(response_model['Payload'].read().decode("utf-8"))
             models = json.loads(res_json['body']) # returns a list of all models
-            price_list = data['Items']
+            options_list = data['Items']
 
             d = defaultdict(dict)
-            for l in (price_list, models):
+            for l in (options_list, models):
                 for elem in l:
                     d[elem['model_id']].update(elem)
 
