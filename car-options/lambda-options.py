@@ -55,7 +55,7 @@ def lambda_handler(event, context):
             options_list = data['Items']
 
             d = defaultdict(dict)
-            for l in (options_list, models):
+            for l in (model, options_list):
                 for elem in l:
                     d[elem['model_id']].update(elem)
 
