@@ -1,20 +1,106 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
-Description: CD Demo Lambda
+Description: SAM Lambda Template
 Resources:
-  CDDemoLambda:
+  carLambdaModel:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: lambda_function.lambda_handler
+      Handler: lambda-model.lambda_handler
       Runtime: python3.6
-      CodeUri: ./LambdaRest
-      Description: 'Lambda function for CD Demo'
-      MemorySize: 128
+      CodeUri: ./car-model
+      Description: 'Lambda function for to GET POST car model'
+      MemorySize: 512
       Timeout: 30
-      Role: 'arn:aws:iam::015320530739:role/MyLambdaRole'
+      Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
-        getAZsAPI:
+        searchModelAPI:
           Type: Api
           Properties:
-            Path: /getazs
-            Method: get
+            Path: /model
+            Method: GET
+        postModelAPI:
+          Type: Api
+          Properties:
+            Path: /model
+            Method: POST
+  carLambdaPrice:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda-price.lambda_handler
+      Runtime: python3.6
+      CodeUri: ./car-price
+      Description: 'Lambda function for GET POST car Price'
+      MemorySize: 512
+      Timeout: 30
+      Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
+      Events:
+        getPriceAPI:
+          Type: Api
+          Properties:
+            Path: /price
+            Method: GET
+        postPriceAPI:
+          Type: Api
+          Properties:
+            Path: /price
+            Method: POST
+  carLambdaOptions:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda-options.lambda_handler
+      Runtime: python3.6
+      CodeUri: ./car-options
+      Description: 'Lambda function for GET POST car Options'
+      MemorySize: 512
+      Timeout: 30
+      Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
+      Events:
+        getoptionsAPI:
+          Type: Api
+          Properties:
+            Path: /options
+            Method: GET
+        postoptionsAPI:
+          Type: Api
+          Properties:
+            Path: /options
+            Method: POST
+  model:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: model
+      AttributeDefinitions:
+        - AttributeName: model_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: model_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5 
+  price:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: price
+      AttributeDefinitions:
+        - AttributeName: price_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: price_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  options:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: options
+      AttributeDefinitions:
+        - AttributeName: option_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: option_id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
