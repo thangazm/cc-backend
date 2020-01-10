@@ -18,7 +18,7 @@ Resources:
           Properties:
             Path: /model
             Method: GET
-        putModelAPI:
+        postModelAPI:
           Type: Api
           Properties:
             Path: /model
@@ -34,12 +34,12 @@ Resources:
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
-        searchModelAPI:
+        getPriceAPI:
           Type: Api
           Properties:
             Path: /price
             Method: GET
-        putModelAPI:
+        postPriceAPI:
           Type: Api
           Properties:
             Path: /price
@@ -55,12 +55,12 @@ Resources:
       Timeout: 30
       Role: 'arn:aws:iam::015320530739:role/cc-lambda-pipeline'
       Events:
-        searchModelAPI:
+        getoptionsAPI:
           Type: Api
           Properties:
             Path: /options
             Method: GET
-        putModelAPI:
+        postoptionsAPI:
           Type: Api
           Properties:
             Path: /options
